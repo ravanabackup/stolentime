@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Time Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPjxwb2x5bGluZSBwb2ludHM9IjEyIDYgMTIgMTIgMTYgMTQiLz48L3N2Zz4=">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Global Time Companion</h1>
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="world-clock">World Clock</button>
+                <button class="tab-btn" data-tab="alarm">Alarm</button>
+                <button class="tab-btn" data-tab="stopwatch">Stopwatch</button>
+                <button class="tab-btn" data-tab="timer">Timer</button>
+            </nav>
+        </header>
+
+        <main>
+            <section id="world-clock" class="tab-content active">
+                <div class="clocks-grid">
+                    <div class="clock-container">
+                        <div class="clock-header">
+                            <select class="timezone-select" id="timezone1"></select>
+                        </div>
+                        <div class="analog-clock">
+                            <div class="hand hour-hand"></div>
+                            <div class="hand minute-hand"></div>
+                            <div class="hand second-hand"></div>
+                            <div class="clock-center"></div>
+                        </div>
+                        <div class="digital-time" id="digital1"></div>
+                    </div>
+                    <div class="clock-container">
+                        <div class="clock-header">
+                            <select class="timezone-select" id="timezone2"></select>
+                        </div>
+                        <div class="analog-clock">
+                            <div class="hand hour-hand"></div>
+                            <div class="hand minute-hand"></div>
+                            <div class="hand second-hand"></div>
+                            <div class="clock-center"></div>
+                        </div>
+                        <div class="digital-time" id="digital2"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="alarm" class="tab-content">
+                <div class="alarm-container">
+                    <h2>Set Alarm</h2>
+                    <div class="alarm-inputs">
+                        <input type="time" id="alarmTime">
+                        <div class="alarm-actions">
+                            <button id="setAlarmBtn">Set Alarm</button>
+                            <button id="snoozeAlarmBtn">Snooze</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="stopwatch" class="tab-content">
+                <div class="stopwatch-container">
+                    <div id="stopwatchDisplay" class="display">00:00:00.000</div>
+                    <div class="stopwatch-controls">
+                        <button id="startStopwatch">Start</button>
+                        <button id="lapStopwatch">Lap</button>
+                        <button id="resetStopwatch">Reset</button>
+                    </div>
+                    <div id="lapsList" class="laps-list"></div>
+                </div>
+            </section>
+
+            <section id="timer" class="tab-content">
+                <div class="timer-container">
+                    <div class="timer-inputs">
+                        <input type="number" id="hours" placeholder="HH" min="0">
+                        <input type="number" id="minutes" placeholder="MM" min="0" max="59">
+                        <input type="number" id="seconds" placeholder="SS" min="0" max="59">
+                    </div>
+                    <div id="timerDisplay" class="display">00:00:00</div>
+                    <div class="timer-controls">
+                        <button id="startTimer">Start</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Alert</h2>
+            <p id="modalMessage"></p>
+            <button id="dismissModal">Dismiss</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
