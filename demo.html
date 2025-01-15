@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A versatile world clock application with multiple features including time zones, alarms, stopwatch, and timer">
+  <link rel="icon" type="image/x-icon" href="./assets/icon.png">
+  <title>World Clock</title>
+  <link rel="stylesheet" href="https://n-clock.netlify.app/style.css">
+</head>
+<body class="dark:bg-gray-900">
+  <div class="container mx-auto px-4 py-8">
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold mb-6 text-white">World Clock</h1>
+      <nav class="tabs inline-flex rounded-lg bg-gray-800 p-1" role="tablist" aria-label="Clock Features">
+        <button class="tab-button active px-6 py-3 rounded-lg transition-colors" 
+                data-tab="clock" 
+                role="tab" 
+                aria-selected="true" 
+                aria-controls="clock-section">
+          Clock
+        </button>
+        <button class="tab-button px-6 py-3 rounded-lg transition-colors" 
+                data-tab="alarm" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="alarm-section">
+          Alarm
+        </button>
+        <button class="tab-button px-6 py-3 rounded-lg transition-colors" 
+                data-tab="stopwatch" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="stopwatch-section">
+          Stopwatch
+        </button>
+        <button class="tab-button px-6 py-3 rounded-lg transition-colors" 
+                data-tab="timer" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="timer-section">
+          Timer
+        </button>
+      </nav>
+    </header>
+
+    <main class="max-w-4xl mx-auto">
+      <section id="clock" class="content active" role="tabpanel" aria-labelledby="clock-tab">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="clock-container bg-gray-800 rounded-2xl p-6">
+            <h2 class="text-xl font-semibold mb-4 text-white">Local Time</h2>
+            <div class="clock-wrapper relative">
+              <div class="clock-face bg-gray-700 rounded-full p-4">
+                <div class="clock relative w-48 h-48 mx-auto">
+                  <div class="hand hour-hand" id="hour1" aria-label="Hour Hand"></div>
+                  <div class="hand minute-hand" id="minute1" aria-label="Minute Hand"></div>
+                  <div class="hand second-hand" id="second1" aria-label="Second Hand"></div>
+                </div>
+              </div>
+              <div id="digital1" class="digital-time text-2xl font-mono text-white mt-4 text-center"></div>
+              <select id="timezone1" class="timezone-select mt-4 w-full bg-gray-700 text-white rounded-lg p-2">
+                <!-- Options will be populated by JavaScript -->
+              </select>
+            </div>
+          </div>
+
+          <div class="clock-container bg-gray-800 rounded-2xl p-6">
+            <h2 class="text-xl font-semibold mb-4 text-white">World Time</h2>
+            <div class="clock-wrapper relative">
+              <div class="clock-face bg-gray-700 rounded-full p-4">
+                <div class="clock relative w-48 h-48 mx-auto">
+                  <div class="hand hour-hand" id="hour2" aria-label="Hour Hand"></div>
+                  <div class="hand minute-hand" id="minute2" aria-label="Minute Hand"></div>
+                  <div class="hand second-hand" id="second2" aria-label="Second Hand"></div>
+                </div>
+              </div>
+              <div id="digital2" class="digital-time text-2xl font-mono text-white mt-4 text-center"></div>
+              <select id="timezone2" class="timezone-select mt-4 w-full bg-gray-700 text-white rounded-lg p-2">
+                <!-- Options will be populated by JavaScript -->
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="alarm" class="content bg-gray-800 rounded-2xl p-6" role="tabpanel" aria-labelledby="alarm-tab">
+        <h2 class="text-2xl font-semibold mb-6 text-white">Alarm Settings</h2>
+        <div class="grid gap-8 md:grid-cols-2">
+          <div class="alarm-input space-y-4">
+            <div class="flex items-center gap-4">
+              <input type="time" id="alarmTime" class="flex-1 bg-gray-700 text-white rounded-lg p-3" aria-label="Set Alarm Time">
+              <button onclick="setAlarm()" class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-6 py-3 transition-colors">
+                Set Alarm
+              </button>
+            </div>
+            <button onclick="snoozeAlarm()" class="w-full bg-gray-700 hover:bg-gray-600 text-white rounded-lg px-6 py-3 transition-colors">
+              Snooze
+            </button>
+          </div>
+          <div class="alarm-list space-y-4">
+            <h3 class="text-xl font-semibold text-white">Active Alarms</h3>
+            <div id="alarmList" class="space-y-2"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="stopwatch" class="content bg-gray-800 rounded-2xl p-6" role="tabpanel" aria-labelledby="stopwatch-tab">
+        <h2 class="text-2xl font-semibold mb-6 text-white">Stopwatch</h2>
+        <div class="space-y-6">
+          <div id="stopwatchDisplay" class="text-5xl font-mono text-white text-center" aria-live="polite">
+            00:00:00.000
+          </div>
+          <div class="flex justify-center gap-4">
+            <button onclick="startStopwatch()" class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-8 py-3 transition-colors">
+              Start
+            </button>
+            <button onclick="lapStopwatch()" class="bg-gray-700 hover:bg-gray-600 text-white rounded-lg px-8 py-3 transition-colors">
+              Lap
+            </button>
+            <button onclick="resetStopwatch()" class="bg-gray-700 hover:bg-gray-600 text-white rounded-lg px-8 py-3 transition-colors">
+              Reset
+            </button>
+          </div>
+          <div id="laps" class="space-y-2 text-white"></div>
+        </div>
+      </section>
+
+      <section id="timer" class="content bg-gray-800 rounded-2xl p-6" role="tabpanel" aria-labelledby="timer-tab">
+        <h2 class="text-2xl font-semibold mb-6 text-white">Timer</h2>
+        <div class="space-y-6">
+          <div class="timer-input flex justify-center items-center gap-4">
+            <input type="number" id="hours" placeholder="00" min="0" max="23" class="w-20 bg-gray-700 text-white text-center rounded-lg p-3" aria-label="Hours">
+            <span class="text-2xl text-white">:</span>
+            <input type="number" id="minutes" placeholder="00" min="0" max="59" class="w-20 bg-gray-700 text-white text-center rounded-lg p-3" aria-label="Minutes">
+            <span class="text-2xl text-white">:</span>
+            <input type="number" id="seconds" placeholder="00" min="0" max="59" class="w-20 bg-gray-700 text-white text-center rounded-lg p-3" aria-label="Seconds">
+          </div>
+          <div class="text-center">
+            <button onclick="startTimer()" class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-8 py-3 transition-colors">
+              Start Timer
+            </button>
+          </div>
+          <div id="timerDisplay" class="text-5xl font-mono text-white text-center" aria-live="polite">
+            00:00:00
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://n-clock.netlify.app/script.js"></script>
+  <script src="https://n-clock.netlify.app/storage.js"></script>
+</body>
+</html>
